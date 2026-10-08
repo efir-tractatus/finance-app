@@ -1,0 +1,27 @@
+body { margin: 0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; background: #f4f4f4; color: #161616; }
+.dashboard { max-width: 1000px; margin: 0 auto; padding: 24px; }
+.tabs { display: flex; gap: 8px; margin: 16px 0; }
+.tabs button { padding: 8px 16px; border: 1px solid #c6c6c6; background: #fff; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: #0f62fe; color: #fff; border-color: #0f62fe; }
+.card { background: #fff; border: 1px solid #e0e0e0; padding: 16px; margin-bottom: 16px; }
+.card__title { margin: 0 0 8px; font-size: 1rem; }
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.summary-grid .card { margin-bottom: 0; }
+.summary__price { font-size: 1.4rem; margin: 4px 0; }
+.summary__change--up { color: #198038; }
+.summary__change--down { color: #da1e28; }
+.status--error { color: #da1e28; }
+.subtitle { margin: 0; color: #525252; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.stat-grid .card { margin-bottom: 0; }
+.stat__label { margin: 0; color: #525252; font-size: 0.85rem; }
+.stat__value { margin: 4px 0; font-size: 1.6rem; font-weight: 600; }
+.stat__value--up { color: #198038; }
+.stat__value--down { color: #da1e28; }
+.stat__hint { margin: 0; color: #525252; font-size: 0.85rem; }
+.note { color: #525252; font-size: 0.85rem; margin: -8px 0 16px; }
+.ranking { width: 100%; border-collapse: collapse; }
+.ranking caption { text-align: left; color: #525252; font-size: 0.85rem; padding-bottom: 8px; }
+.ranking th, .ranking td { text-align: left; padding: 8px; border-bottom: 1px solid #e0e0e0; }
+.ranking__row--focus { background: #edf5ff; font-weight: 600; }
+.swatch { display: inline-block; width: 10px; height: 10px; margin-right: 8px; border-radius: 50%; }
