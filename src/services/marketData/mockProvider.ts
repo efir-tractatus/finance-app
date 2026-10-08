@@ -4,10 +4,19 @@ import type { PriceSeries, Quote, TimeWindow } from '../../domain/types';
 import { MarketDataError } from '../errors';
 import type { MarketDataProvider } from './MarketDataProvider';
 
-/** Base prices for deterministic demo data, taken from the company config. Unknown symbols are rejected. */
-const BASE_PRICES: Record<string, number> = Object.fromEntries(
-  DEFAULT_COMPANIES.filter((c) => c.mockBasePrice !== undefined).map((c) => [c.symbol, c.mockBasePrice as number]),
-);
+/**
+ * Extra tickers the offline demo can serve for the "user-selected company" graph.
+ * They are deliberately NOT in DEFAULT_COMPANIES, so they never join the IBM comparison set.
+ */
+export const EXTRA_MOCK_PRICES: Record<string, number> = { AAPL: 190, GOOGL: 170 };
+
+/** Base prices for deterministic demo data. Anything not listed behaves like a ticker Yahoo cannot find. */
+const BASE_PRICES: Record<string, number> = {
+  ...Object.fromEntries(
+    DEFAULT_COMPANIES.filter((c) => c.mockBasePrice !== undefined).map((c) => [c.symbol, c.mockBasePrice as number]),
+  ),
+  ...EXTRA_MOCK_PRICES,
+};
 
 const FIXED_NOW = Date.UTC(2025, 0, 15, 21, 0, 0);
 
@@ -29,7 +38,8 @@ function pointCount(window: TimeWindow): number {
 export function createMockProvider(): MarketDataProvider {
   const assertKnown = (symbol: string) => {
     if (!(symbol in BASE_PRICES)) {
-      throw new MarketDataError(`Unknown symbol: ${symbol}`, 'INVALID_SYMBOL');
+      // Mirrors the live server: a well-formed ticker with no data is NO_DATA (404), not INVALID_SYMBOL.
+      throw new MarketDataError(`No data found for ${symbol}`, 'NO_DATA');
     }
   };
 

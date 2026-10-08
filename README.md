@@ -10,6 +10,16 @@ A small React dashboard that compares **IBM** with four competitors (Microsoft, 
 
 Trend charts are rebased so every company starts at 100. This makes stocks with different price levels comparable.
 
+### Add any company
+
+Under the tabs, type a ticker (for example `AAPL`) and choose **Show graph** to see that company against IBM for the active time window. The graph is separate from the IBM comparison, so the ranks, peer average and ranking table are never affected.
+
+- Input is trimmed and upper-cased. Empty, malformed and already-shown tickers get a message and no request is made.
+- An unknown ticker shows "No data found", and a service outage shows a different message. Both offer Retry.
+- The graph stays when you switch tabs. **Remove** clears it.
+- The ticker is stored in the URL (`?symbol=AAPL`), so a link reopens the same graph.
+- In offline mode (`npm run dev:mock`), only `AAPL` and `GOOGL` have demo data. Any other ticker shows "No data found".
+
 ## Quick start
 
 Requires **Node 22 or later** (`yahoo-finance2` v4 needs it).
@@ -100,7 +110,8 @@ The day view looks back several days so weekends and holidays still show the las
 
 ## Extending
 
-- **Add a company:** add one entry to `DEFAULT_COMPANIES` in `src/config/companies.ts` (symbol, display name, colour). Add `mockBasePrice` too if you want it available in mock mode. The dashboard is designed for IBM plus up to four competitors (`MAX_COMPETITORS`), and a test enforces that limit.
+- **Add a company to the comparison:** add one entry to `DEFAULT_COMPANIES` in `src/config/companies.ts` (symbol, display name, colour). Add `mockBasePrice` too if you want it available in mock mode. The dashboard is designed for IBM plus up to four competitors (`MAX_COMPETITORS`), and a test enforces that limit. A company a user types in is *not* added here; it is shown by its own panel (see "Add any company").
+- **Add a mock-only ticker for the user-selected graph:** add it to `EXTRA_MOCK_PRICES` in `src/services/marketData/mockProvider.ts`.
 - **Change a time window:** edit `src/config/timeWindows.ts`.
 - **Use a different data source:** implement `MarketDataProvider` and select it in `src/services/marketData/index.ts`. The UI does not change.
 - **Add a view:** create a component that takes `ViewProps` (`src/features/dashboard/viewTypes.ts`) and register it in `DashboardPage.tsx`.

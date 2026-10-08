@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { DEFAULT_COMPANIES } from '../../config/companies';
 import { TIME_WINDOWS } from '../../config/timeWindows';
-import { createMockProvider } from './mockProvider';
+import { EXTRA_MOCK_PRICES, createMockProvider } from './mockProvider';
 
 // The mock provider is the offline/demo data source, so it must honour the same contract as the live one.
 describe('mockProvider', () => {
@@ -36,8 +36,16 @@ describe('mockProvider', () => {
     expect(await provider.getHistory('IBM', 'week')).toEqual(await createMockProvider().getHistory('IBM', 'week'));
   });
 
-  it('rejects unknown symbols with INVALID_SYMBOL', async () => {
-    await expect(provider.getQuotes(['IBM', 'ZZZZ'])).rejects.toMatchObject({ code: 'INVALID_SYMBOL' });
-    await expect(provider.getHistory('ZZZZ', 'day')).rejects.toMatchObject({ code: 'INVALID_SYMBOL' });
+  it('rejects unknown symbols with NO_DATA, like the live server does', async () => {
+    await expect(provider.getQuotes(['IBM', 'ZZZZ'])).rejects.toMatchObject({ code: 'NO_DATA' });
+    await expect(provider.getHistory('ZZZZ', 'day')).rejects.toMatchObject({ code: 'NO_DATA' });
+  });
+
+  it('serves the extra demo tickers without adding them to the dashboard company list', async () => {
+    for (const symbol of Object.keys(EXTRA_MOCK_PRICES)) {
+      const series = await provider.getHistory(symbol, 'week');
+      expect(series.points.length).toBeGreaterThan(1);
+      expect(DEFAULT_COMPANIES.some((c) => c.symbol === symbol)).toBe(false);
+    }
   });
 });

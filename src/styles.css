@@ -25,3 +25,13 @@ body { margin: 0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
 .ranking th, .ranking td { text-align: left; padding: 8px; border-bottom: 1px solid #e0e0e0; }
 .ranking__row--focus { background: #edf5ff; font-weight: 600; }
 .swatch { display: inline-block; width: 10px; height: 10px; margin-right: 8px; border-radius: 50%; }
+.picker { margin: 24px 0 16px; }
+.picker label { display: block; font-size: 0.85rem; color: #525252; margin-bottom: 4px; }
+.picker__row { display: flex; gap: 8px; }
+.picker input { flex: 1; max-width: 260px; padding: 8px; border: 1px solid #8d8d8d; background: #fff; }
+.picker input[aria-invalid="true"] { border-color: #da1e28; }
+.picker button { padding: 8px 16px; border: 1px solid #0f62fe; background: #0f62fe; color: #fff; cursor: pointer; }
+.picker__message { color: #da1e28; margin: 6px 0 0; font-size: 0.9rem; }
+.custom-company__header { display: flex; align-items: baseline; justify-content: space-between; }
+.custom-company h2 { font-size: 1.1rem; margin: 8px 0; }
+.link-button { background: none; border: none; color: #0f62fe; cursor: pointer; text-decoration: underline; }
