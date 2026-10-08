@@ -32,6 +32,7 @@ Visual check with `npm run dev:mock`, then open http://localhost:5173:
 1. **Current day** tab: two headline cards, five company cards, one intraday chart with five lines.
 2. **Last 7 days** tab: IBM 7-day change, versus-peers and rank cards, a trend chart and a bar chart.
 3. **Last quarter** tab: the same three cards, a trend chart and a ranking table with the IBM row highlighted.
+4. **Add a company** (under the tabs): enter `AAPL` and a graph appears against IBM; enter `ZZZZ` and "No data found" appears; enter `IBM` and you are told it is already shown. The three tabs above are unchanged throughout.
 
 With `npm run dev` (live data), prices are real and change between runs.
 If Yahoo is unreachable you should see an error message with a **Retry** button, not a blank page.
@@ -48,6 +49,7 @@ If Yahoo is unreachable you should see an error message with a **Retry** button,
 | State hook | `useAsync.test.ts` | Loading, success, error, retry, ignoring stale responses |
 | Config guards | `config.test.ts` | Unique valid symbols, at most 4 competitors, window definitions |
 | UI rendering | `DashboardPage.test.tsx`, `ChartCard.test.tsx` | Each of the three views, tab switching, one failing company, total failure with Retry |
+| User-selected company | `SymbolPicker.test.tsx`, `CustomCompany.test.tsx` | Input normalization and rejection (empty, malformed, already shown), loading, unknown ticker vs outage, Retry, IBM failing, persistence across tabs, `?symbol=` link, and regression checks that the IBM views still show "of 5" and five ranking rows |
 
 ## When a check fails
 
